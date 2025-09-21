@@ -1,13 +1,13 @@
-package com.beon_tteuk.beon_tteuk;
+package com.beontteuk.beontteuk;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BeonTteukApplication {
+public class BeontteukApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BeonTteukApplication.class, args);
+		SpringApplication.run(BeontteukApplication.class, args);
 	}
 
 }

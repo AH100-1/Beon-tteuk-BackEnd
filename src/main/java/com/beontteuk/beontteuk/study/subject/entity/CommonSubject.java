@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 public class CommonSubject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subject_common_id")
-    private Long subjectCommonId;
+    @Column(name = "common_subject_id")
+    private Long commonSubjectId;
 
     @Column(name = "subject_name", nullable = false)
     private String subjectName;

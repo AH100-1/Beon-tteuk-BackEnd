@@ -1,0 +1,38 @@
+name: Notify Discord on Pull Request
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send PR info to Discord
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_USER="${{ github.event.pull_request.user.login }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          PR_BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          PR_HEAD_BRANCH="${{ github.event.pull_request.head.ref }}"
+
+          payload=$(cat <<EOF
+          {
+            "content": "📌 **Pull Request 알림**",
+            "embeds": [{
+              "title": "PR: ${PR_TITLE}",
+              "url": "${PR_URL}",
+              "description": "브랜치: \`${PR_HEAD_BRANCH} → ${PR_BASE_BRANCH}\`",
+              "fields": [
+                { "name": "작성자", "value": "${PR_USER}", "inline": true },
+                { "name": "링크", "value": "${PR_URL}", "inline": false }
+              ]
+            }]
+          }
+          EOF
+          )
+
+          curl -H "Content-Type: application/json" \
+               -d "$payload" \
+               "${{ secrets.DISCORD_WEBHOOK_URL }}"
